@@ -1,0 +1,20 @@
+import sys
+import time
+import numpy as np
+sys.path.append("H:\My Documents\GitHub\SignalHoundSA\pySignalHound")
+from SignalHound import SignalHound
+sh = SignalHound()
+print sh.deviceHandle
+sh.configureCenterSpan(center=900.0e6, span=0.1e6)
+sh.configureAcquisition(detector="min-max", scale="log-scale")
+sh.configureLevel(ref=-10,atten=0)
+sh.configureSweepCoupling_2(rbw=1.0e3, vbw=1.0e3, rejection=True)
+sh.initiate(mode="sweeping", flag=0)
+info = sh.QuerySweepInfo()
+info['sweep_length']
+data = sh.GetSweep_32f()
+for i in data:
+ 	print i
+
+sh.closeDevice()
+sh.EnableExternalRef()
