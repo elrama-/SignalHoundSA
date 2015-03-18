@@ -1,0 +1,42 @@
+self.OpenDevice()
+#Device handle incorporate as variable of the object signal hound
+#opening error handled in driver
+self.configureCenterSpan(900.0e6, 1.0e6)
+#center, span
+self.configureAcquisition(detector="min-max", scale="log-scale")
+#detector, scale
+self.configureLevel(ref=-10,atte=0)
+#ref, atten
+self.configureSweepCoupling(handle, 1.0e3, 1.0e3, true)
+#rbw, vbw, sweepTime, rbwType, rejection
+
+self.saInitiate(mode="sweeping", flag=0)
+self.saQuerySweepInfo(handle, sweepLen, startFreq, binSize)
+self.saGetSweep_32f(handle, min, max)
+self.closeDevice();
+
+
+
+
+self.OpenDevice()
+	# Configure a center frequency of 990MHz // Span is ignored for I/Q data streaming 
+self.configureCenterSpan(center=990.0e6, span=200.0e3)	#span can be skipped, does nothing
+	# Specify the reference
+self.configureLevel(ref=-20,atten=0)
+	# Specify a sample rate of 486111.111 / 8 = 60763 // and a bandpass filter of 50kHz 
+self.configureIQ(id, downsample=8, bandwidth=50.0e3)
+self.initiate(id, mode="IQ", flag=0)	#flag can be skippeddoes nothing
+		# Verify bandwidth and samplerate. Also determine // the number if I/Q data pairs the API returns // for each I/Q data query. 
+self.queryStreamInfo(id, &len, &bandwidth, &sampleRate);
+		# iq_array has len*2 dimensions (I2,Q1,I2,Q2....)
+self.getIQ_32f(id, iq_array)	#not implemented
+self.closeDevice()
+###################################
+
+def getIQ_32(self,output=):
+		output = (ct.c_double * arraySize)()
+		outputPnt = ct.pointer(output)
+
+	err = self.dll.saGetIQ_64f(self.deviceHandle, outputPnt)
+def getIQ_64(self,output=):
+####################################

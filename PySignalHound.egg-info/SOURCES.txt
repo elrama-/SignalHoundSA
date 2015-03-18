@@ -1,0 +1,11 @@
+MANIFEST.in
+setup.py
+tests.py
+PySignalHound.egg-info/PKG-INFO
+PySignalHound.egg-info/SOURCES.txt
+PySignalHound.egg-info/dependency_links.txt
+PySignalHound.egg-info/requires.txt
+PySignalHound.egg-info/top_level.txt
+SignalHound/__init__.py
+SignalHound/bb_api_h.py
+SignalHound/data/bb_api.dll
